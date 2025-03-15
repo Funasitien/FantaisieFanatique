@@ -2,7 +2,11 @@
 
 ## To-do
 
-- **3D Render**
+- ~~3D Render~~
+- ~~Map generation~~
+- Ball render
+- Player controls
+- Start menu
 
 ## Game logic
 
