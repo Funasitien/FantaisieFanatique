@@ -2,7 +2,7 @@
 
 ## To-do
 
-- *3D Render*
+- **3D Render**
 
 ## Game logic
 
