@@ -1,7 +1,13 @@
-# Ping Pong 3D
+# 3D Breakout
 
-But : exploser toutes les briques
+## To-do
 
-Le joueur doit gagner en moins de tours possibles.
-JSP si c'est aléatoire ou pas mais générations de broques dans l'espace. Il lance la boulle en 3D (id quake mais qui rebondit) et elle casse toutes les briques sur son passage. 
-Si elle touche le bas de la zone, elle disparait. Il faudrait faire une "boite" pour pas que la boulle parte à tatawine mais la rendre soit invisible soit pas moche.
+- __3D Render__
+
+## Game logic
+
+The player launches a ball in sapce which bounces and breaks bricks.
+### Goal : Break all the bricks !
+The player must win in the least shots possible.
+If the ball touches the floor of the zone it disappears.
+If the ball touches any of the wall of the "cube" it bounces.
