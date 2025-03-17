@@ -6,15 +6,16 @@ class Ball:
         self.x = 0
         self.y = 0
         self.z = 0
+        self.speed = 0.1
         self.vec_velocity = vector
 
     def apply_vec(self):
         """
             Bouge la balle !
         """
-        self.x += self.vec_velocity[0]
-        self.y += self.vec_velocity[1]
-        self.z += self.vec_velocity[2]
+        self.x += self.vec_velocity[0] * self.speed
+        self.y += self.vec_velocity[1] * self.speed
+        self.z += self.vec_velocity[2] * self.speed
 
     def update_vec(self):
         """

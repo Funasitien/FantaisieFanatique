@@ -39,7 +39,7 @@ class App:
 
         self.map = generate_map()
 
-        self.ball = None
+        self.ball = Ball(np.array([0.0, 0.0, 0.0]))
 
         pyxel.init(256, 256)
         pyxel.run(self.update, self.draw)
@@ -83,6 +83,7 @@ class App:
             self.pitch -= 1
 
         self.at = np.array([cos(rad_yaw) * cos(rad_pitch), sin(rad_pitch), sin(rad_yaw) * cos(rad_pitch)]) + self.camera
+        self.ball.apply_vec()
 
     def draw(self):
         pyxel.cls(0)
