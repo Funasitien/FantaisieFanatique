@@ -18,7 +18,7 @@ class Ball:
         """
         if not 0 <= self.x <= 10:
             self.vec_velocity[0] = -self.vec_velocity[0]
-        if self.y <= 20:
+        if self.y > 20:
             self.vec_velocity[1] = -self.vec_velocity[1] 
         if not 0 <= self.z <= 10:
             self.vec_velocity[2] = -self.vec_velocity[2]
