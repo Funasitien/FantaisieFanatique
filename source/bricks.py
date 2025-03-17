@@ -12,6 +12,7 @@ class Brick:
                  col : int
                  ):
         
+        self.x, self.y, self.z = x, y, z
         self.id = None
         biggest_id = max(Brick.used_ids, default=0)
 

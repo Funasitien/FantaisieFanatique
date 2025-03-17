@@ -83,6 +83,9 @@ class App:
             self.pitch -= 1
 
         self.at = np.array([cos(rad_yaw) * cos(rad_pitch), sin(rad_pitch), sin(rad_yaw) * cos(rad_pitch)]) + self.camera
+        for brick in self.map:
+            self.ball.check_col_brick(self.map, brick)
+        self.ball.update_vec()
         self.ball.apply_vec()
 
     def draw(self):
