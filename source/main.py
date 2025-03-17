@@ -67,8 +67,8 @@ class App:
         # Launch a ball
         # For debug purpose ofcrs
         if pyxel.btn(pyxel.KEY_F5):
-            print(self.at)
-            ball = Ball(self.at)
+            print(self.at - self.camera)
+            ball = Ball(self.at - self.camera)
         
         if pyxel.btn(pyxel.KEY_D):
             self.yaw -= 1
