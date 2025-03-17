@@ -107,7 +107,7 @@ class App:
 
             p = ViewToScreen @ p
 
-            pyxel.circ(p[0], p[1], 10, 10)
+            pyxel.circ(p[0], p[1], 10 / d, 10)
 
 
 
