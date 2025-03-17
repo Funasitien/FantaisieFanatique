@@ -100,6 +100,8 @@ class App:
             ViewToScreen = ClipToScreenMatrice(256, 256)
             TransformMatrix = ViewToClip @ WorldToView
 
+            d = np.linalg.norm(np.array([self.ball.x, self.ball.y, self.ball.z]) - self.camera)
+
             p = TransformMatrix @ t
             p = p / p[3]
 
