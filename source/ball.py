@@ -2,16 +2,19 @@ class Ball:
     """
         La balle !
     """
-    def __init__(self):
+    def __init__(self, vector):
         self.x = 0
         self.y = 0
         self.z = 0
-        self.vec_velocity = [0, 0, 0]
+        self.vec_velocity = vector
 
     def apply_vec(self):
         """
             Bouge la balle !
         """
+        self.x += self.vec_velocity[0]
+        self.y += self.vec_velocity[1]
+        self.z += self.vec_velocity[2]
 
     def update_vec(self):
         """

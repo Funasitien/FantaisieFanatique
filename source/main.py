@@ -59,6 +59,16 @@ class App:
         if pyxel.btn(pyxel.KEY_L):  # Strafe right
             self.camera[0] += sin(rad_yaw) * speed
             self.camera[2] -= cos(rad_yaw) * speed
+        if pyxel.btn(pyxel.KEY_SPACE):
+            self.camera[1] += speed
+        if pyxel.btn(pyxel.KEY_SHIFT):
+            self.camera[1] -= speed
+
+        # Launch a ball
+        # For debug purpose ofcrs
+        if pyxel.btn(pyxel.KEY_F5):
+            print(self.at)
+            ball = Ball(self.at)
         
         if pyxel.btn(pyxel.KEY_D):
             self.yaw -= 1
