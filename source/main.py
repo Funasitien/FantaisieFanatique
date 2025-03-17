@@ -39,6 +39,8 @@ class App:
 
         self.map = generate_map()
 
+        self.ball = None
+
         pyxel.init(256, 256)
         pyxel.run(self.update, self.draw)
 
@@ -66,9 +68,10 @@ class App:
 
         # Launch a ball
         # For debug purpose ofcrs
-        if pyxel.btn(pyxel.KEY_F5):
-            print(self.at - self.camera)
-            ball = Ball(self.at - self.camera)
+        if pyxel.btnp(pyxel.KEY_F5):
+            vec_vel = self.at - self.camera
+            print(vec_vel)
+            self.ball = Ball(self.at - self.camera)
         
         if pyxel.btn(pyxel.KEY_D):
             self.yaw -= 1
@@ -86,5 +89,23 @@ class App:
         tri_list = bricks_to_triangles(self.map)
         render_3D_objects(self.camera, self.at, tri_list)
         pyxel.text(0, 0, str(self.at), 7)
+
+
+        if self.ball is not None:
+            t = np.array([self.ball.x, self.ball.y, self.ball.z, 1])
+            # NOT OPTIMALLLLL
+            WorldToView = WorldToViewMatrice(self.camera, self.at)
+            ViewToClip = ViewToClipMatrice(60, 1)
+            ViewToScreen = ClipToScreenMatrice(256, 256)
+            TransformMatrix = ViewToClip @ WorldToView
+
+            p = TransformMatrix @ t
+            p = p / p[3]
+
+            p = ViewToScreen @ p
+
+            pyxel.circ(p[0], p[1], 10, 10)
+
+
 
 App()
