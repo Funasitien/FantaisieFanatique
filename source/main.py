@@ -112,6 +112,4 @@ class App:
 
             pyxel.circ(p[0], p[1], 100 / d, 10)
 
-
-
 App()
