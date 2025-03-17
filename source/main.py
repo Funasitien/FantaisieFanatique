@@ -90,7 +90,7 @@ class App:
         tri_list = bricks_to_triangles(self.map)
         render_3D_objects(self.camera, self.at, tri_list)
         pyxel.text(0, 0, str(self.at), 7)
-
+        pyxel.text(0, 15, f"coords: {self.camera}", 7)
 
         if self.ball is not None:
             t = np.array([self.ball.x, self.ball.y, self.ball.z, 1])
@@ -107,7 +107,7 @@ class App:
 
             p = ViewToScreen @ p
 
-            pyxel.circ(p[0], p[1], 10 / d, 10)
+            pyxel.circ(p[0], p[1], 100 / d, 10)
 
 
 
