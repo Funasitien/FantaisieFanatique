@@ -57,7 +57,8 @@ def ClipToScreenMatrice(w, h):
 def render_3D_objects(
                       camera : tuple[3], 
                       at : tuple[3], 
-                      triangles : list[Triangle]
+                      triangles : list[Triangle],
+                      ball = None
                       ):
     """
         Fait une projection / impression des triangles sur l'écran
@@ -90,5 +91,24 @@ def render_3D_objects(
 
     trianglesToShow.sort(key=lambda pl : max(pl[0][2], pl[1][2], pl[2][2]), reverse=True)
 
+    ball_index = -1 
+    if ball is not None:
+        t = np.array([ball.x, ball.y, ball.z, 1])
+        pball = TransformMatrix @ t
+        pball = pball / pball[3]
+        pball = ViewToScreen @ pball
+        ball_radius = min(100, 100 / np.linalg.norm(np.array([ball.x, ball.y, ball.z]) - camera))
+        ball_index = 0
+        for i, e in enumerate(trianglesToShow):
+            if max(e[0][2], e[1][2], e[2][2]) >= pball[2]:
+                ball_index = i
+                break
+
     for p1, p2, p3, c in trianglesToShow:
+        if ball_index == 0:
+            pyxel.circ(pball[0], pball[1], ball_radius, 10)
         pyxel.tri(p1[0], p1[1], p2[0], p2[1], p3[0], p3[1], c)
+        ball_index -= 1
+
+    if ball is not None:
+        pyxel.circb(pball[0], pball[1], ball_radius, 7)
