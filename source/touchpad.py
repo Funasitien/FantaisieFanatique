@@ -2,19 +2,20 @@ import pyxel
 
 class App:
     def __init__(self):
-        pyxel.init(160, 120, title="Key Press Detection")  # Initialize window
-        self.pressed_key = None  # Store last pressed key
-        pyxel.run(self.update, self.draw)  # Run Pyxel app
+        pyxel.init(160, 120, title="Key Press Detection")
+        self.pressed_key = None
+        self.key_map = {getattr(pyxel, name): name for name in dir(pyxel) if name.startswith("KEY_") or name.startswith("GAMEPAD1_")}
+        pyxel.run(self.update, self.draw)
 
     def update(self):
-        for key in range(1024):  # Check all possible key codes
-            if pyxel.btnp(key):  # If key is pressed
-                self.pressed_key = key  # Store key code
+        for key, name in self.key_map.items():
+            if pyxel.btnp(key):
+                self.pressed_key = name  # Store the key name
 
     def draw(self):
-        pyxel.cls(0)  # Clear screen
-        pyxel.text(50, 50, "Press any key...", pyxel.frame_count % 16)  # Blinking text
-        if self.pressed_key is not None:
-            pyxel.text(50, 70, f"Key Code: {self.pressed_key}", 7)  # Display key code
+        pyxel.cls(0)
+        pyxel.text(50, 50, "Press any key...", pyxel.frame_count % 16)
+        if self.pressed_key:
+            pyxel.text(50, 70, f"Key: {self.pressed_key}", 7)  # Display key name
 
 App()
