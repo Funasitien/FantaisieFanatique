@@ -50,11 +50,18 @@ class App:
         self.deadzone = 15000
 
         pyxel.init(256, 256)
+        pyxel.load("res.pyxres")
         pyxel.run(self.update, self.draw)
 
     def update(self):
-        if pyxel.btnp(pyxel.KEY_M):
+        if pyxel.frame_count == 0:
+            pyxel.playm(0, loop=True)
+        if pyxel.btnp(pyxel.KEY_M) or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_START):
+            print("Cheat Enabled")
             self.cheat = True
+        if pyxel.btnp(pyxel.KEY_G) or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_BACK):
+            print("GOF")
+            self.current_state = State.game_over
         match self.current_state:
             case State.menu: 
                 self.update_menu()
@@ -72,10 +79,7 @@ class App:
             self.current_state = State.shooting
 
     def update_shooting(self):
-        dy = pyxel.btnv(pyxel.GAMEPAD1_AXIS_RIGHTY) / self.deadzone
-        dx = pyxel.btnv(pyxel.GAMEPAD1_AXIS_RIGHTX) / self.deadzone
-        self.yaw -= dx if abs(dx) >= 1 else 0
-        self.pitch -= dy if abs(dy) >= 1 else 0
+
 
 
         if pyxel.btnp(pyxel.KEY_SPACE) or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_B):
@@ -87,6 +91,11 @@ class App:
         rad_yaw = radians(self.yaw)
         rad_pitch = radians(self.pitch)
         if self.cheat:
+            dy = pyxel.btnv(pyxel.GAMEPAD1_AXIS_RIGHTY) / self.deadzone
+            dx = pyxel.btnv(pyxel.GAMEPAD1_AXIS_RIGHTX) / self.deadzone
+            self.yaw -= dx if abs(dx) >= 1 else 0
+            self.pitch -= dy if abs(dy) >= 1 else 0
+
             py = pyxel.btnv(pyxel.GAMEPAD1_AXIS_LEFTY) / (self.deadzone)
             px = pyxel.btnv(pyxel.GAMEPAD1_AXIS_LEFTX) / (self.deadzone)
 
@@ -99,7 +108,11 @@ class App:
                 self.camera[1] += .1
             if pyxel.btn(pyxel.GAMEPAD1_BUTTON_RIGHTSTICK):
                 self.camera[1] -= .1
-        
+        else:
+            dy = pyxel.btnv(pyxel.GAMEPAD1_AXIS_LEFTY) / self.deadzone
+            dx = pyxel.btnv(pyxel.GAMEPAD1_AXIS_LEFTX) / self.deadzone
+            self.yaw -= dx if abs(dx) >= 1 else 0
+            self.pitch -= dy if abs(dy) >= 1 else 0
         
 
         self.camera[0]
@@ -107,8 +120,9 @@ class App:
         self.at = np.array([cos(rad_yaw) * cos(rad_pitch), sin(rad_pitch), sin(rad_yaw) * cos(rad_pitch)]) + self.camera
 
     def update_bouncing(self):
-        dy = pyxel.btnv(pyxel.GAMEPAD1_AXIS_RIGHTY) / self.deadzone
-        dx = pyxel.btnv(pyxel.GAMEPAD1_AXIS_RIGHTX) / self.deadzone
+        dy = pyxel.btnv(pyxel.GAMEPAD1_AXIS_LEFTY) / self.deadzone
+        dx = pyxel.btnv(pyxel.GAMEPAD1_AXIS_LEFTX) / self.deadzone
+
         self.yaw -= dx if abs(dx) >= 1 else 0
         self.pitch -= dy if abs(dy) >= 1 else 0
 
@@ -117,7 +131,7 @@ class App:
         self.at = np.array([cos(rad_yaw) * cos(rad_pitch), sin(rad_pitch), sin(rad_yaw) * cos(rad_pitch)]) + self.camera
 
         for brick in self.bricks:
-            self.ball.check_col_brick(self.bricks, brick)
+            if self.ball.check_col_brick(self.bricks, brick): pyxel.play(3, 2)
         went_oob = self.ball.update_vec()
         self.ball.apply_vec()
 
@@ -144,6 +158,9 @@ class App:
             case State.boucing:
                 self.draw_bouncing()
                 return
+            case State.game_over:
+                self.draw_game_over()
+                return
 
     def draw_menu(self):
         pyxel.text(150, 100, "PRESS SPACE TO CONTINUE", 7)
@@ -164,8 +181,6 @@ class App:
         self.draw_hud()
 
     def draw_game_over(self):
-        tri_list = bricks_to_triangles(self.bricks)
-        render_3D_objects(self.camera, self.at, tri_list, self.ball)
         pyxel.text(1, 2, "GAME OVER", 7)
         pyxel.text(110, 12, f"Score: {self.score}", 7)
         pyxel.text(104, 22, f"High Score: {self.high_score}", 7)
