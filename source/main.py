@@ -63,9 +63,8 @@ class App:
 
     def update_menu(self):
         # Clique sur le bouton
-        if pyxel.btnp(pyxel.KEY_SPACE):
+        if pyxel.btnp(pyxel.KEY_SPACE) or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_A):
             self.current_state = State.shooting
-            pyxel.mouse(False)
 
     def update_shooting(self):
 
@@ -127,7 +126,7 @@ class App:
         went_oob = self.ball.update_vec()
         self.ball.apply_vec()
 
-        self.bricks_left = 150 - len(self.bricks)
+        self.bricks_left = len(self.bricks)
         if self.bricks_left == 0:
             self.current_state = State.game_over
 
