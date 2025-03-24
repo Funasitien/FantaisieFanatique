@@ -4,9 +4,10 @@
 
 - ~~3D Render~~
 - ~~Map generation~~
-- Ball render
-- Player controls
+- ~~Ball render~~
+- ~~Player controls~~
 - Start menu
+- Game Over menu
 
 ## Game logic
 
