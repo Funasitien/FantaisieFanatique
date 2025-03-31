@@ -181,9 +181,10 @@ class App:
         self.draw_hud()
 
     def draw_game_over(self):
-        pyxel.text(1, 2, "GAME OVER", 7)
-        pyxel.text(110, 12, f"Score: {self.score}", 7)
-        pyxel.text(104, 22, f"High Score: {self.high_score}", 7)
+        pyxel.cls(7)
+        pyxel.blt(70, 10, 0, 0, 0, 116, 60)
+        pyxel.text(110, 102, f"Score: {self.score}", 0)
+        pyxel.text(104, 112, f"High Score: {self.high_score}", 0)
 
     def draw_hud(self):
         pyxel.text(1, 2, f"[{self.bricks_broken}/150] briques", 7)
