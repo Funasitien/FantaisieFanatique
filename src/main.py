@@ -4,8 +4,6 @@ from math import radians, cos, sin
 from random import randint
 from os import path
 
-TotoIsChiant = True
-
 from graphics import *
 from bricks import *
 from ball import *
@@ -239,5 +237,4 @@ class App:
         with open("save.bin", "wb") as file:
             file.write(bytes(bytes_l))
 
-while TotoIsChiant:
-    App()
+App()
